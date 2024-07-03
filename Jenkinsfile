@@ -30,13 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                    docker.image("yusufsmsk:${env.BUILD_NUMBER}").run("-d -p 8085:8085 --name demo-container")
-                }
-            }
-        }
+
     }
 
 }
