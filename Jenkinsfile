@@ -13,15 +13,6 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
-        stage('Stop and Remove Existing Container') {
-             steps {
-                   script {
-
-                               bat 'docker stop demo-container '
-                               bat 'docker rm demo-container'
-                               }
-                           }
-                    }
 
         stage('Build docker image'){
             steps{
@@ -30,7 +21,13 @@ pipeline {
                 }
             }
         }
-
+        stage('Push image to Hub'){
+            steps{
+                script{
+                    docker.image("yusufsmsk:${env.BUILD_NUMBER}").run("-d -p 8085:8085 --name demo-container")
+                }
+            }
+        }
     }
 
 }
